@@ -1,6 +1,5 @@
-HEADERS = file_reader.h utils.h
-OBJECTS = main.o file_reader.o utils.o
-
+HEADERS = file_reader.h utils.h tokens.h tokenizer.h
+OBJECTS = main.o file_reader.o utils.o tokenizer.o
 default: main
 
 %.o: %.c $(HEADERS)

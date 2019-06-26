@@ -10,7 +10,7 @@ static char buffer[READ_FILE_BUF_SIZE];
 static size_t buffer_size = 0;
 
 /**
- * Reads next character from file. It is faster than `getc`.
+ * Reads next character from file. It is much faster than `getc`.
  * returns NULL - if the file does not exist or next character is EOF or 
  * char* - pointer to the next char in the file
  */
