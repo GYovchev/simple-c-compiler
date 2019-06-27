@@ -2,6 +2,7 @@ void d(char *c);
 
 char is_alpha(char *c);
 char is_digit(char *c);
+char is_whitespace(char *c);
 
 /**
  * Is that symbol permited for use in a variable name

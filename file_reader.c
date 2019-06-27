@@ -6,7 +6,7 @@
 
 static char *last_char = NULL;
 static FILE *source_file = NULL;
-static char buffer[READ_FILE_BUF_SIZE];
+static char buffer[READ_FILE_BUF_SIZE*2];
 static size_t buffer_size = 0;
 
 /**
@@ -14,7 +14,7 @@ static size_t buffer_size = 0;
  * returns NULL - if the file does not exist or next character is EOF or 
  * char* - pointer to the next char in the file
  */
-char *next_char(char *name)
+char *get_char(char *name)
 {
     char lf = load_file(name);
     if (lf == 0 && name != NULL)
@@ -23,7 +23,8 @@ char *next_char(char *name)
     {
         if (source_file != NULL)
         {
-            buffer_size = fread(buffer, 1, READ_FILE_BUF_SIZE - 1, source_file);
+            for(int i=READ_FILE_BUF_SIZE;i<READ_FILE_BUF_SIZE*2;i++) buffer[i - READ_FILE_BUF_SIZE] = buffer[i];
+            buffer_size = fread(buffer, 1, READ_FILE_BUF_SIZE*2 - 1, source_file);
             last_char = buffer;
             if (feof(source_file))
             {

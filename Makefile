@@ -9,7 +9,7 @@ main: $(OBJECTS)
 	gcc $(OBJECTS) -o $@
 
 test:
-	-./main main.c
+	-./main "example/fake.c"
 
 clean:
 	-rm -f $(OBJECTS)

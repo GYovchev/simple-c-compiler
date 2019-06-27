@@ -1,11 +1,8 @@
+#include <stdio.h>
+
 void d(char *c)
 {
     printf("%s", c);
-}
-
-void d(int *d)
-{
-    printf("%d", d);
 }
 
 char is_alpha(char *c)
@@ -22,11 +19,18 @@ char is_digit(char *c)
     return 0;
 }
 
+char is_whitespace(char *c)
+{
+    if (*c == ' ' || *c == '\n' || *c == '\t')
+        return 1;
+    return 0;
+}
+
 char is_var_name_char(char *c)
 {
-    if (is_alpha(*c) || *c == '_')
+    if (is_alpha(c) || *c == '_')
         return 1;
-    if (is_alpha(*c) || is_digit(*c) || *c == '_')
+    if (is_alpha(c) || is_digit(c) || *c == '_')
         return 2;
     return 0;
 }
