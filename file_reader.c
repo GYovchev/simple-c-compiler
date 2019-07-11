@@ -4,9 +4,9 @@
 
 #define READ_FILE_BUF_SIZE 15
 
-static char *last_char = NULL;
+static char *next_char = NULL;
 static FILE *source_file = NULL;
-static char buffer[READ_FILE_BUF_SIZE*2];
+static char buffer[READ_FILE_BUF_SIZE];
 static size_t buffer_size = 0;
 
 /**
@@ -19,13 +19,12 @@ char *get_char(char *name)
     char lf = load_file(name);
     if (lf == 0 && name != NULL)
         return NULL;
-    if (last_char == NULL || last_char == buffer + buffer_size)
+    if (next_char == NULL || next_char == buffer + buffer_size)
     {
         if (source_file != NULL)
         {
-            for(int i=READ_FILE_BUF_SIZE;i<READ_FILE_BUF_SIZE*2;i++) buffer[i - READ_FILE_BUF_SIZE] = buffer[i];
-            buffer_size = fread(buffer, 1, READ_FILE_BUF_SIZE*2 - 1, source_file);
-            last_char = buffer;
+            buffer_size = fread(buffer, 1, READ_FILE_BUF_SIZE - 1, source_file);
+            next_char = buffer;
             if (feof(source_file))
             {
                 fclose(source_file);
@@ -38,7 +37,7 @@ char *get_char(char *name)
             return NULL;
         }
     }
-    return last_char++;
+    return next_char++;
 }
 
 char load_file(char *name)
@@ -48,7 +47,7 @@ char load_file(char *name)
         if (source_file != NULL)
         {
             fclose(source_file);
-            last_char = NULL;
+            next_char = NULL;
         }
         source_file = fopen(name, "r");
         if (source_file == NULL)

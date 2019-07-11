@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include "utils.h"
 
 void d(char *c)
 {
@@ -74,24 +76,55 @@ char is_keyword(char *c)
   return 0;
 }
 
-typedef struct string string;
-struct string
-{
-  char *s;
-  size_t size;
-  size_t b_size;
-};
-
-static string create_string(size_t size)
+string create_string(size_t size)
 {
   if (size < 16)
     size = 16;
   return (string){malloc(size), 0, size};
 }
 
-static size_t strsize(string *s)
+void add_char_to_string(string *s, char c)
 {
-  if (isnas(s))
+  if (s != NULL)
+  {
+    if (s->b_size == s->size)
+    {
+      s = realloc(s, s->b_size * 2);
+    }
+    s->s[s->size] = c;
+    s->size++;
+  }
+}
+
+void print_string(string s)
+{
+  for (size_t i = 0; i < s.size; i++)
+  {
+    printf("%c", s.s[i]);
+  }
+}
+
+char str_cmp_str(string a, string b)
+{
+  if (a.size != b.size)
     return 0;
-  return s->size;
+  for (size_t i = 0; i < a.size; i++)
+  {
+    if (a.s[i] != b.s[i])
+      return 0;
+  }
+  return 1;
+}
+
+char str_cmp_char(string a, char *b)
+{
+  size_t i;
+  for (i = 0; i < a.size; i++)
+  {
+    if (b[i] == 0 || a.s[i] != b[i])
+      return 0;
+  }
+  if (b[i])
+    return 0;
+  return 1;
 }

@@ -25,13 +25,15 @@ char *next_char()
 
 Token *next_token()
 {
+  string buffer = create_string(1);
   char *c = next_char();
   if (is_valid_var_name(c) == 1)
   {
     while (is_valid_var_name(c))
     {
-      printf("%c", *c);
+      add_char_to_string(&buffer, *c);
       NEXT_CHAR(c)
+      /*
       if (is_whitespace(c))
       {
         while (is_whitespace(c))
@@ -48,8 +50,10 @@ Token *next_token()
             NEXT_CHAR(c)
           }
         }
-      }
+      } */
     }
+    if (str_cmp_char(buffer, "int"))
+      print_string(buffer);
   }
   else if (is_digit(c))
   {

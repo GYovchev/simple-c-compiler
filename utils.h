@@ -23,3 +23,20 @@ char str_equal(char *a, char *b);
  * 2 - char
  */
 char is_keyword(char *c);
+
+typedef struct string string;
+struct string
+{
+    char *s;
+    unsigned int size;
+    unsigned int b_size;
+};
+
+string create_string(size_t size);
+
+void add_char_to_string(string *s, char c);
+
+void print_string(string s);
+
+char str_cmp_str(string a, string b);
+char str_cmp_char(string a, char *b);
