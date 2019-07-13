@@ -19,7 +19,7 @@ char *get_char(char *name)
     char lf = load_file(name);
     if (lf == 0 && name != NULL)
         return NULL;
-    if (next_char == NULL || next_char == buffer + buffer_size)
+    if (next_char == NULL || next_char >= buffer + buffer_size)
     {
         if (source_file != NULL)
         {
