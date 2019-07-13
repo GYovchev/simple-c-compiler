@@ -1,3 +1,8 @@
+#include "types.h"
+
+#ifndef UTILS_H_
+#define UTILS_H_
+
 void d(char *c);
 
 char is_alpha(char *c);
@@ -24,14 +29,6 @@ char str_equal(char *a, char *b);
  */
 char is_keyword(char *c);
 
-typedef struct string string;
-struct string
-{
-    char *s;
-    unsigned int size;
-    unsigned int b_size;
-};
-
 string create_string(size_t size);
 
 void add_char_to_string(string *s, char c);
@@ -40,3 +37,5 @@ void print_string(string s);
 
 char str_cmp_str(string a, string b);
 char str_cmp_char(string a, char *b);
+
+#endif

@@ -1,12 +1,12 @@
-HEADERS = file_reader.h utils.h tokens.h tokenizer.h
+HEADERS = file_reader.h utils.h types.h tokenizer.h
 OBJECTS = main.o file_reader.o utils.o tokenizer.o
 default: main
 
 %.o: %.c $(HEADERS)
-	gcc -c $< -o $@
+	gcc -g -std=c11 -c $< -o $@
 
 main: $(OBJECTS)
-	gcc $(OBJECTS) -o $@
+	gcc -g -std=c11 $(OBJECTS) -o $@
 
 test:
 	-./main "example/fake.c"

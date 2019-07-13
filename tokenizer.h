@@ -1,3 +1,1 @@
-#include "tokens.h"
-
-Token *next_token();
+Token next_token();

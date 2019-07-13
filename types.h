@@ -1,11 +1,31 @@
+#ifndef TYPES_H_
+#define TYPES_H_
+
+typedef struct string
+{
+    char *s;
+    unsigned int size;
+    unsigned int b_size;
+} string;
+
 typedef enum TokenType
 {
-    VAR_INIT
+    ID,
+    INT,
+    IF,
+    FOR,
+    CONST,
+    OPBR,
+    CLBR,
+    OPPAR,
+    CLPAR,
+    E,
+    NONE
 } TokenType;
 
 typedef enum DataType
 {
-    INT,
+    //INT,
     CHAR
 } DataType;
 
@@ -35,5 +55,8 @@ typedef union {
 typedef struct
 {
     TokenType type;
-    TokenDescription description;
+    string value;
+    //TokenDescription description;
 } Token;
+
+#endif

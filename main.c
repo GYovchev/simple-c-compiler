@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#include "types.h"
 #include "file_reader.h"
 #include "utils.h"
 #include "tokenizer.h"
@@ -16,5 +17,13 @@ int main(int argc, char **argv)
         printf("Cannot open the file or it is empty");
         return -2;
     }
-    next_token();
+    Token a = next_token();
+    while (a.type != NONE)
+    {
+        print_string(a.value);
+        printf("\n");
+        fflush(stdout);
+        a = next_token();
+    }
+    fflush(stdout);
 }

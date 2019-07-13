@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "utils.h"
+#include "types.h"
 
 void d(char *c)
 {
@@ -23,7 +24,7 @@ char is_digit(char *c)
 
 char is_whitespace(char *c)
 {
-  if (*c == ' ' || *c == '\n' || *c == '\t')
+  if (*c == ' ' || *c == '\n' || *c == '\t' || *c == '\r')
     return 1;
   return 0;
 }
