@@ -4,6 +4,7 @@
 #define UTILS_H_
 
 void d(char *c);
+void err(char *c);
 
 char is_alpha(char *c);
 char is_digit(char *c);
@@ -30,12 +31,14 @@ char str_equal(char *a, char *b);
 char is_keyword(char *c);
 
 string create_string(size_t size);
-
 void add_char_to_string(string *s, char c);
 
 void print_string(string s);
 
 char str_cmp_str(string a, string b);
 char str_cmp_char(string a, char *b);
+
+vector_statement create_vector_statement(size_t size);
+void add_statement_to_vector(vector_statement *vs, Statement s);
 
 #endif

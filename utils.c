@@ -8,6 +8,12 @@ void d(char *c)
   printf("%s", c);
 }
 
+void err(char *c)
+{
+  d("ERROR: ");
+  d(c);
+}
+
 char is_alpha(char *c)
 {
   if ((*c >= 'a' && *c <= 'z') || (*c >= 'A' && *c <= 'Z'))
@@ -94,6 +100,26 @@ void add_char_to_string(string *s, char c)
     }
     s->s[s->size] = c;
     s->size++;
+  }
+}
+
+vector_statement create_vector_statement(size_t size)
+{
+  if (size < 16)
+    size = 16;
+  return (vector_statement){malloc(size), 0, size};
+}
+
+void add_statement_to_vector(vector_statement *vs, Statement s)
+{
+  if (vs != NULL)
+  {
+    if (vs->b_size == vs->size)
+    {
+      vs = realloc(vs, vs->b_size * 2);
+    }
+    vs->s[vs->size] = s;
+    vs->size++;
   }
 }
 

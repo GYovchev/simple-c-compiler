@@ -28,7 +28,6 @@ char *next_char()
 
 Token transform_to_token(string s)
 {
-  Token res;
   if (s.size == 0)
     return (Token){NONE, (string){NULL, 0, 0}};
   if (str_cmp_char(s, "if"))
@@ -37,6 +36,14 @@ Token transform_to_token(string s)
     return (Token){FOR, s};
   if (str_cmp_char(s, "int"))
     return (Token){INT, s};
+  if (str_cmp_char(s, "return"))
+    return (Token){RET, s};
+  if (str_cmp_char(s, "<="))
+    return (Token){LET, s};
+  if (str_cmp_char(s, ">="))
+    return (Token){GET, s};
+  if (str_cmp_char(s, "=="))
+    return (Token){EQCMP, s};
   if (is_digit(s.s))
     return (Token){CONST, s};
   if (is_valid_var_name(s.s))
@@ -51,6 +58,12 @@ Token transform_to_token(string s)
     return (Token){OPPAR, s};
   if (s.s[0] == '}')
     return (Token){CLPAR, s};
+  if (s.s[0] == '=')
+    return (Token){EQ, s};
+  if (s.s[0] == '<')
+    return (Token){LT, s};
+  if (s.s[0] == '>')
+    return (Token){GT, s};
   return (Token){NONE, s};
 }
 

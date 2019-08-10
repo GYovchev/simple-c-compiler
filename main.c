@@ -4,6 +4,7 @@
 #include "file_reader.h"
 #include "utils.h"
 #include "tokenizer.h"
+#include "parser.h"
 
 int main(int argc, char **argv)
 {
@@ -17,13 +18,7 @@ int main(int argc, char **argv)
         printf("Cannot open the file or it is empty");
         return -2;
     }
-    Token a = next_token();
-    while (a.type != NONE)
-    {
-        print_string(a.value);
-        printf("\n");
-        fflush(stdout);
-        a = next_token();
-    }
+    parse();
+    d("\n");
     fflush(stdout);
 }

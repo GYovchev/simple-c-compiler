@@ -20,9 +20,50 @@ typedef enum TokenType
     OPPAR,
     CLPAR,
     E,
+    EQ,
+    EQCMP,
+    GT,
+    GET,
+    LT,
+    LET,
+    RET,
     NONE
 } TokenType;
 
+typedef struct
+{
+    TokenType type;
+    string value;
+    //TokenDescription description;
+} Token;
+
+typedef union Statement Statement;
+
+typedef struct vector_statement
+{
+    Statement *s;
+    unsigned int size;
+    unsigned int b_size;
+} vector_statement;
+
+typedef struct
+{
+    string name;
+    vector_statement body;
+} IntFunctionDeclaration;
+
+typedef struct
+{
+    string name;
+    int value;
+} IntDeclaration;
+
+union Statement {
+    IntDeclaration vd;
+    IntFunctionDeclaration ifd;
+};
+
+///////////////////////////////////////////////////////////////////////////
 typedef enum DataType
 {
     //INT,
@@ -51,12 +92,5 @@ typedef union {
     VarDeclarationToken var_init;
     VarAssingmentToken var_assignment;
 } TokenDescription;
-
-typedef struct
-{
-    TokenType type;
-    string value;
-    //TokenDescription description;
-} Token;
 
 #endif
