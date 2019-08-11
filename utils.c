@@ -103,11 +103,11 @@ void add_char_to_string(string *s, char c)
   }
 }
 
-vector_statement create_vector_statement(size_t size)
+vector_statement create_vector_statement(size_t size, vector_statement *parent)
 {
   if (size < 16)
     size = 16;
-  return (vector_statement){malloc(size), 0, size};
+  return (vector_statement){malloc(size * sizeof(Statement)), 0, size, parent};
 }
 
 void add_statement_to_vector(vector_statement *vs, Statement s)
@@ -116,7 +116,7 @@ void add_statement_to_vector(vector_statement *vs, Statement s)
   {
     if (vs->b_size == vs->size)
     {
-      vs = realloc(vs, vs->b_size * 2);
+      vs = realloc(vs, vs->b_size * sizeof(Statement) * 2);
     }
     vs->s[vs->size] = s;
     vs->size++;
@@ -154,4 +154,16 @@ char str_cmp_char(string a, char *b)
   if (b[i])
     return 0;
   return 1;
+}
+
+int stoi(string n)
+{
+  int res = 0;
+  int power = 1;
+  for (char *i = n.s + n.size - 1; i >= n.s; i--)
+  {
+    res += power * (*i - '0');
+    power *= 10;
+  }
+  return res;
 }

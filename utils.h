@@ -38,7 +38,9 @@ void print_string(string s);
 char str_cmp_str(string a, string b);
 char str_cmp_char(string a, char *b);
 
-vector_statement create_vector_statement(size_t size);
+int stoi(string n);
+
+vector_statement create_vector_statement(size_t size, vector_statement *parent);
 void add_statement_to_vector(vector_statement *vs, Statement s);
 
 #endif

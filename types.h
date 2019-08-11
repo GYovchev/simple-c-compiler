@@ -37,13 +37,14 @@ typedef struct
     //TokenDescription description;
 } Token;
 
-typedef union Statement Statement;
+typedef struct Statement Statement;
 
 typedef struct vector_statement
 {
     Statement *s;
     unsigned int size;
     unsigned int b_size;
+    void *parent;
 } vector_statement;
 
 typedef struct
@@ -58,12 +59,25 @@ typedef struct
     int value;
 } IntDeclaration;
 
-union Statement {
+typedef union {
     IntDeclaration vd;
     IntFunctionDeclaration ifd;
+} StatementContainer;
+
+typedef enum
+{
+    INT_DECLARATION,
+    INT_FUNCTION_DECLARATION
+} StatementType;
+
+struct Statement
+{
+    StatementType type;
+    StatementContainer v;
 };
 
 ///////////////////////////////////////////////////////////////////////////
+
 typedef enum DataType
 {
     //INT,
