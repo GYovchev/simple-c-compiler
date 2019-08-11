@@ -59,15 +59,31 @@ typedef struct
     int value;
 } IntDeclaration;
 
+typedef struct
+{
+    int value;
+} Return;
+
+typedef struct
+{
+    int expression;
+    vector_statement body;
+} IfElseStatement;
+
 typedef union {
     IntDeclaration vd;
     IntFunctionDeclaration ifd;
+    Return ret;
+    IfElseStatement ies;
+
 } StatementContainer;
 
 typedef enum
 {
     INT_DECLARATION,
-    INT_FUNCTION_DECLARATION
+    INT_FUNCTION_DECLARATION,
+    RETURN,
+    IF_ELSE_STATEMENT
 } StatementType;
 
 struct Statement
