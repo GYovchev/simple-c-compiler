@@ -167,3 +167,30 @@ int stoi(string n)
   }
   return res;
 }
+
+variable_map create_variable_map()
+{
+  return (variable_map){malloc(16 * sizeof(Variable)), 0, 16};
+}
+
+void add_variable_to_map(variable_map *vs, Variable v)
+{
+  if (vs != NULL)
+  {
+    if (vs->b_size == vs->size)
+    {
+      vs = realloc(vs, vs->b_size * sizeof(Statement) * 2);
+    }
+    vs->v[vs->size] = v;
+    vs->size++;
+  }
+}
+
+Variable* get_variable_from_map(variable_map *vm, string name) {
+  for(int i=0;i<vm->size;i++) {
+    if (str_cmp_str(vm->v[i].name, name)) {
+      return &(vm->v[i]);
+    }
+  }
+  return 0;
+}

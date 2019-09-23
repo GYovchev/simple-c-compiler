@@ -33,6 +33,13 @@ void traverse_body(vector_statement res)
             d("\nWith value: ");
             printf("%d", res.s[i].v.vd.value);
         }
+        else if (res.s[i].type == INT_VALUE_ASSIGMENT)
+        {
+            d("\nAssigning value to variable: ");
+            print_string(res.s[i].v.vd.name);
+            d("\nValue: ");
+            printf("%d", res.s[i].v.vd.value);
+        }
         else if (res.s[i].type == RETURN)
         {
             d("\nReturning: ");
@@ -63,10 +70,9 @@ int read_expression()
     return stoi(t.value);
 }
 
-void parse()
+void parse(vector_statement* res)
 {
-    vector_statement res = create_vector_statement(100, 0);
-    vector_statement *current = &res;
+    vector_statement *current = res;
 
     // char inside_one_line_body = 0;
 
@@ -92,7 +98,20 @@ void parse()
             current = current->parent;
             continue;
         }
-        if (a.type == INT)
+        else if (a.type == ID) {
+            string name = a.value;
+            a = next_token();
+            if(a.type == EQ) {
+                IntValueAssigment iva = (IntValueAssigment){name, read_expression()};
+                add_statement_to_vector(current, (Statement){INT_VALUE_ASSIGMENT, (StatementContainer)iva});
+                if (!expect(E))
+                    return;
+                continue;
+            } else if(a.type == OPBR) {
+                // TODO: Implement
+            }
+        }
+        else if (a.type == INT)
         {
             a = next_token();
             if (a.type != ID)
@@ -135,14 +154,14 @@ void parse()
             printf("\n%d", a.type);
             return;
         }
-        if (a.type == RET)
+        else if (a.type == RET)
         {
             add_statement_to_vector(current, (Statement){RETURN, (StatementContainer)(Return){read_expression()}});
             if (!expect(E))
                 return;
             continue;
         }
-        if (a.type == IF)
+        else if (a.type == IF)
         {
             if (!expect(OPBR))
                 return;
@@ -159,10 +178,10 @@ void parse()
             current = &current->s[current->size - 1].v.ies.body;
             continue;
         }
-        if (a.type == NONE)
+        else if (a.type == NONE)
         {
-            // TODO: return body
-            traverse_body(res);
+            // TODO: return AST
+            // traverse_body(res);
             return;
         }
     }

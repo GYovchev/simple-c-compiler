@@ -47,6 +47,21 @@ typedef struct vector_statement
     void *parent;
 } vector_statement;
 
+typedef struct Variable
+{
+    string name;
+    char type; // 0-local; 1-dynamic
+    char data_type; // 0-int
+    int place;
+} Variable;
+
+typedef struct variable_map
+{
+    Variable *v;
+    unsigned int size;
+    unsigned int b_size;
+} variable_map;
+
 typedef struct
 {
     string name;
@@ -58,6 +73,12 @@ typedef struct
     string name;
     int value;
 } IntDeclaration;
+
+typedef struct
+{
+    string name;
+    int value;
+} IntValueAssigment;
 
 typedef struct
 {
@@ -75,12 +96,14 @@ typedef union {
     IntFunctionDeclaration ifd;
     Return ret;
     IfElseStatement ies;
+    IntValueAssigment iva;
 
 } StatementContainer;
 
 typedef enum
 {
     INT_DECLARATION,
+    INT_VALUE_ASSIGMENT,
     INT_FUNCTION_DECLARATION,
     RETURN,
     IF_ELSE_STATEMENT

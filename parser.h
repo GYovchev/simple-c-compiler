@@ -1,1 +1,1 @@
-void parse();
+void parse(vector_statement* res);

@@ -1,0 +1,1 @@
+void generate(vector_statement res);

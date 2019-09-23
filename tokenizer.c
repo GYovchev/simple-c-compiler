@@ -70,7 +70,7 @@ Token transform_to_token(string s)
 Token next_token()
 {
   // TODO: Don't malloc every time
-  string buffer = create_string(100);
+  string buffer = create_string(10);
   if (!c)
     NEXT_CHAR(c);
   while (is_whitespace(c))

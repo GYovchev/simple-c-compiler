@@ -43,4 +43,8 @@ int stoi(string n);
 vector_statement create_vector_statement(size_t size, vector_statement *parent);
 void add_statement_to_vector(vector_statement *vs, Statement s);
 
+variable_map create_variable_map();
+void add_variable_to_map(variable_map *vs, Variable v);
+Variable* get_variable_from_map(variable_map *vm, string name);
+
 #endif
