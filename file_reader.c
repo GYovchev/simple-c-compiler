@@ -2,7 +2,7 @@
 
 #include "file_reader.h"
 
-#define READ_FILE_BUF_SIZE 15
+#define READ_FILE_BUF_SIZE 500
 
 static char *next_char = NULL;
 static FILE *source_file = NULL;
