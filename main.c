@@ -21,7 +21,7 @@ int main(int argc, char **argv)
     }
     vector_statement program = create_vector_statement(100, 0);
     parse(&program);
-    generate(program);
+    //generate(program);
     d("\n");
     fflush(stdout);
 }

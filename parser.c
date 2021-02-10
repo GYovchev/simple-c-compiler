@@ -51,13 +51,13 @@ void traverse_body(vector_statement res)
 
 char expect(int expected)
 {
-    Token a = next_token();
-    if (a.type != expected)
+    Token t = next_token();
+    if (t.type != expected)
     {
         err("Expected token:");
         printf("%d", expected);
         d(" but found: ");
-        print_string(a.value);
+        print_string(t.value);
         return 0;
     }
     return 1;
@@ -74,21 +74,10 @@ void parse(vector_statement* res)
 {
     vector_statement *current = res;
 
-    // char inside_one_line_body = 0;
-
-    Token a;
-    while (a.type != NONE)
-    {
-        a = next_token();
-        // if (inside_one_line_body > 0)
-        // {
-        //     inside_one_line_body--;
-        //     if (inside_one_line_body == 0)
-        //     {
-        //         current = current->parent;
-        //     }
-        // }
-        if (a.type == CLPAR)
+    Token t;
+    do {
+        Token t = next_token();
+        if (t.type == CLPAR)
         {
             if (current->parent == 0)
             {
@@ -98,37 +87,37 @@ void parse(vector_statement* res)
             current = current->parent;
             continue;
         }
-        else if (a.type == ID) {
-            string name = a.value;
-            a = next_token();
-            if(a.type == EQ) {
+        else if (t.type == ID) {
+            string name = t.value;
+            t = next_token();
+            if(t.type == EQ) {
                 IntValueAssigment iva = (IntValueAssigment){name, read_expression()};
                 add_statement_to_vector(current, (Statement){INT_VALUE_ASSIGMENT, (StatementContainer)iva});
                 if (!expect(E))
                     return;
                 continue;
-            } else if(a.type == OPBR) {
-                // TODO: Implement
+            } else if(t.type == OPBR) {
+                // TODO: Implement functions
             }
         }
-        else if (a.type == INT)
+        else if (t.type == INT)
         {
-            a = next_token();
-            if (a.type != ID)
+            t = next_token();
+            if (t.type != ID)
             {
                 err("Expected identifier but found: ");
-                print_string(a.value);
+                print_string(t.value);
                 return;
             }
-            string name = a.value;
-            a = next_token();
-            if (a.type == E)
+            string name = t.value;
+            t = next_token();
+            if (t.type == E)
             {
                 IntDeclaration id = (IntDeclaration){name, 0};
                 add_statement_to_vector(current, (Statement){INT_DECLARATION, (StatementContainer)id});
                 continue;
             }
-            if (a.type == EQ)
+            if (t.type == EQ)
             {
                 IntDeclaration id = (IntDeclaration){name, read_expression()};
                 add_statement_to_vector(current, (Statement){INT_DECLARATION, (StatementContainer)id});
@@ -136,7 +125,7 @@ void parse(vector_statement* res)
                     return;
                 continue;
             }
-            if (a.type == OPBR)
+            if (t.type == OPBR)
             {
                 // TODO: should support function arguments
                 if (!expect(CLBR))
@@ -150,26 +139,24 @@ void parse(vector_statement* res)
                 continue;
             }
             err("Unexpected token after identifier: ");
-            print_string(a.value);
-            printf("\n%d", a.type);
+            print_string(t.value);
+            printf("\n%d", t.type);
             return;
         }
-        else if (a.type == RET)
+        else if (t.type == RET)
         {
             add_statement_to_vector(current, (Statement){RETURN, (StatementContainer)(Return){read_expression()}});
             if (!expect(E))
                 return;
             continue;
         }
-        else if (a.type == IF)
+        else if (t.type == IF)
         {
             if (!expect(OPBR))
                 return;
             int exp = read_expression();
             if (!expect(CLBR))
                 return;
-            // inside_one_line_body = 2;
-            // TODO: Should support one line bodies
             if (!expect(OPPAR))
                 return;
             vector_statement vs = create_vector_statement(100, current);
@@ -178,11 +165,11 @@ void parse(vector_statement* res)
             current = &current->s[current->size - 1].v.ies.body;
             continue;
         }
-        else if (a.type == NONE)
+        else if (t.type == NONE)
         {
             // TODO: return AST
-            // traverse_body(res);
+            traverse_body(*res);
             return;
         }
-    }
+    } while (t.type != NONE);
 }

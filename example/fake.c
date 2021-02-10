@@ -1,8 +1,8 @@
 int main()
 {
-    int i = 0;
-    i = 5;
-    int c = 5;
-    int d = 4;
-    return 123;
+    int a = 5;
+    if (a) {
+        a = 6;
+    }
+    return 0;
 }
